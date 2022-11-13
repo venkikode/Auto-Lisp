@@ -1,0 +1,30 @@
+
+(setq plotsty "rccdwg.ctb")
+(defun dtr(x) (* (/ pi 180.0) x))
+(defun rtd(x) (* (/ 180 pi) x))
+
+
+(defun c:fix ()
+   (setq a (ssget))
+   (setq n (sslength a))
+   (setq index 0 )
+   (repeat n
+      (setq b1 (entget (ssname a index)))
+      (setq index (1+ index))
+      (setq b (assoc 0 b1 ))
+      (if (= "TEXT" (cdr b))
+	 (progn
+		(setq aa (assoc 1 b1 ))
+		(setq aa1 (car aa))
+		(setq aa2 (cdr aa))
+		(setq aa3 (atoi aa2))
+		(setq aa4 (fix aa3))
+		(setq aa5 (itoa aa4))
+		(setq aa6 (cons aa1 aa5))
+		(setq b1 (subst aa6 aa b1))
+	    (entmod b1)
+	 )
+      )
+   )
+ (princ)
+)
